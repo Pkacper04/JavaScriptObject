@@ -44,6 +44,8 @@
         if(isNaN(r1) || isNaN(r2))
         {
             document.getElementById("errorMessage").innerHTML = "Musisz podac oba kola";
+            document.getElementById("wyn1").innerHTML = null;
+            document.getElementById("wyn2").innerHTML = null;
             return false;
         }
         O1 = new Kolo(r1);
@@ -51,6 +53,8 @@
         document.getElementById("wyn1").innerHTML = "Pole kola 1: "+O1.ZwrocPole()+", Obwod kola 1: "+O1.ZwrocObwod();
         document.getElementById("wyn2").innerHTML = "Pole kola 2: "+O2.ZwrocPole()+", Obwod kola 2: "+O2.ZwrocObwod();
         document.getElementById("errorMessage").innerHTML = null;
+        document.getElementById("r1").value = null;
+        document.getElementById("r2").value = null;
         return false;
     }
 
