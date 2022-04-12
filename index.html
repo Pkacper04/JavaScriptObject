@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript: Tworzenie i odwoływanie się do obiektów.</title>
+</head>
+<body>
+    <p id="paragraf"></p>
+
+    <script>
+        var O1={
+            imie: "Piotr",
+            nazwisko: "Siewniak",
+            wiek: 50,
+            daneWyjscie: function(){
+                return this.imie + " " + this.nazwisko + ", wiek: "+ this.wiek;
+            }
+        };
+        O1.wiek = 21;
+        document.getElementById("paragraf").innerHTML = O1.daneWyjscie();
+
+    </script>
+</body>
+</html>
