@@ -6,43 +6,126 @@
 </head>
 <body>
     <p id="paragraf"></p>
+    <p id="paragraf1"></p>
+    <p id="paragraf2"></p>
 
     <form>
-        <input type="submit" onclick="return PokarzTekst()" value="Pokaz Tekst">
-        <input type="submit" onclick="return SchowajTekst()" value="Schowaj Tekst">
+        <label>Pokaz wszystkie pojazdy</label>
+        <input type="submit" onclick="return WszystkiePojazdy()" value="Pokaz Wszystkie Pojazdy">
+        <br><br>
+        <label>Podaj ID Pojazdu</label>
+        <input type="number" id="idPojazdu">
+        <input type="submit" onclick="return WyswietlPojazd()" value="Pokaz Pojazd">
+        <br><br>
+        <label>Podaj Marke Pojazdu</label>
+        <input type="text" id="markaPojazdu">
+        <br>
+        <label>Podaj Rocznik Pojazdu</label>
+        <input type="number" id="rokPojazdu">
+        <br>
+        <label>Podaj kolor Pojazdu</label>
+        <input type="text" id="kolorPojazdu">
+        <br>
+        <label>Podaj stan Pojazdu</label>
+        <input type="text" id="stanPojazdu">
+        <br>
+        <input type="submit" onclick="return DodajPojazd()" value="Dodaj Pojazd">
+        <br><br>
+        <input type="submit" onclick="return SchowajTekst()" value="Schowaj Pojazd">
     </form>
+
+    <p id="errorMessage" style="color:red"></p>
 
     <script>
 
-        /* Listing 6.1.1
-                let O1={
-            imie: "Piotr",
-            nazwisko: "Siewniak",
-            wiek: 50,
-            daneWyjscie: function(){
-                return this.imie + " " + this.nazwisko + ", wiek: "+ this.wiek;
+        class Pojazd{
+            marka = [];
+            rocznik = [];
+            kolor = [];
+            stan = [];
+            constructor (marka,rocznik,kolor,stan){
+            this.marka.push(marka);
+            this.rocznik.push(rocznik);
+            this.kolor.push(kolor);
+            this.stan.push(stan);
             }
-        };
-        document.getElementById("paragraf").innerHTML = O1.daneWyjscie();*/
 
-        var O1 = new Object();
+            DanePojazdu(id) {
+                return "marka: " + this.marka[id] + ", rocznik: " + this.rocznik[id] +
+                    ", kolor: " + this.kolor[id] + ", stan: " + this.stan[id];
+            }
 
-        O1.imie = "Kacper";
-        O1.nazwisko = "Potaczala";
-        O1["wiek"] = 18;
-        O1.daneWyjscie = function (){
-            return this.imie + " "+ this.nazwisko + ", wiek: "+this.wiek;
+            Dodaj(marka,rocznik,kolor,stan){
+                this.marka.push(marka);
+                this.rocznik.push(rocznik);
+                this.kolor.push(kolor);
+                this.stan.push(stan);
+            }
+
+            IloscPojazdow(){
+                return this.marka.length;
+            }
+
+            WyswietlWszystkiePojazdy(paragraf){
+                paragraf.innerHTML = "";
+                for(var i=0;i<this.IloscPojazdow();i++)
+                {
+                    paragraf.innerHTML += "marka: "+this.marka[i]+", rocznik: "+this.rocznik[i]+
+                        ", kolor: "+this.kolor[i] + ", stan: "+this.stan[i]+"<br>";
+                }
+            }
+
+
         }
 
-        function PokarzTekst(){
-            document.getElementById("paragraf").innerHTML = O1.daneWyjscie();
+        var O1 = new Pojazd("Audi",2003,"czerwony","nowy")
+
+        function WszystkiePojazdy(){
+            O1.WyswietlWszystkiePojazdy(document.getElementById("paragraf2"));
             return false;
         }
 
-        function SchowajTekst(){
-            document.getElementById("paragraf").innerHTML = "";
+        function WyswietlPojazd(){
+            var idPojazdu = document.getElementById("idPojazdu").value;
+            if(idPojazdu != null && idPojazdu != 0 && idPojazdu <= O1.IloscPojazdow()) {
+                document.getElementById("paragraf").innerHTML = O1.DanePojazdu(idPojazdu - 1);
+            }
+            else
+            {
+                document.getElementById("errorMessage").innerHTML = "Podaj prawidlowy numer pojazdu od 1 do "+O1.IloscPojazdow();
+                return false;
+            }
+            document.getElementById("errorMessage").innerHTML = null;
             return false;
         }
+
+        function SchowajTekst() {
+            document.getElementById("paragraf").innerHTML = null;
+            return false;
+        }
+
+        function DodajPojazd(){
+            var marka = document.getElementById("markaPojazdu").value;
+            var rocznik = document.getElementById("rokPojazdu").value;
+            var kolor = document.getElementById("kolorPojazdu").value;
+            var stan = document.getElementById("stanPojazdu").value;
+
+            if(marka != "" && rocznik != "" && kolor != "" && stan != "")
+            {
+                O1.Dodaj(marka,rocznik,kolor,stan);
+            }
+            else
+            {
+                document.getElementById("errorMessage").innerHTML = "Wypelnij Wszystkie pola";
+                return false
+            }
+            document.getElementById("errorMessage").innerHTML = null;
+            document.getElementById("paragraf1").innerHTML = "Ilosc Pojazdow: "+O1.IloscPojazdow();
+            return false;
+        }
+
+
+        document.getElementById("paragraf1").innerHTML = "Ilosc Pojazdow: "+O1.IloscPojazdow();
 
     </script>
 </body>
