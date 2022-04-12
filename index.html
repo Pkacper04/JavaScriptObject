@@ -7,8 +7,15 @@
 <body>
     <p id="paragraf"></p>
 
+    <form>
+        <input type="submit" onclick="return PokarzTekst()" value="Pokaz Tekst">
+        <input type="submit" onclick="return SchowajTekst()" value="Schowaj Tekst">
+    </form>
+
     <script>
-        var O1={
+
+        /* Listing 6.1.1
+                let O1={
             imie: "Piotr",
             nazwisko: "Siewniak",
             wiek: 50,
@@ -16,8 +23,26 @@
                 return this.imie + " " + this.nazwisko + ", wiek: "+ this.wiek;
             }
         };
-        O1.wiek = 21;
-        document.getElementById("paragraf").innerHTML = O1.daneWyjscie();
+        document.getElementById("paragraf").innerHTML = O1.daneWyjscie();*/
+
+        var O1 = new Object();
+
+        O1.imie = "Kacper";
+        O1.nazwisko = "Potaczala";
+        O1["wiek"] = 18;
+        O1.daneWyjscie = function (){
+            return this.imie + " "+ this.nazwisko + ", wiek: "+this.wiek;
+        }
+
+        function PokarzTekst(){
+            document.getElementById("paragraf").innerHTML = O1.daneWyjscie();
+            return false;
+        }
+
+        function SchowajTekst(){
+            document.getElementById("paragraf").innerHTML = "";
+            return false;
+        }
 
     </script>
 </body>
